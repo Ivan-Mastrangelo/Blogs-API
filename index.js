@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const userRoutes = require('./routes/userRoutes');
+const loginRoutes = require('./routes/loginRoutes');
 const errorsMiddleware = require('./middlewares/errorsMiddleware');
 
 const app = express();
@@ -13,6 +14,7 @@ app.get('/', (request, response) => {
 });
 
 app.use('/user', userRoutes);
+app.use('/login', loginRoutes);
 
 app.use(errorsMiddleware);
 

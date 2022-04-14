@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 const userController = require('../controllers/userController');
-const userInMiddleware = require('../middlewares/usersMiddlewares');
+const userInMiddleware = require('../middlewares/userMiddleware');
 
 router.post('/', userInMiddleware, userController.create);
 
