@@ -1,6 +1,6 @@
 const userService = require('../services/userService');
 
-const create = async (req, res) => {
+const create = async (req, res, next) => {
   try {
     const { displayName, email, password, image } = req.body;
     
@@ -8,7 +8,7 @@ const create = async (req, res) => {
   
     return res.status(201).json({ token });
   } catch (error) {
-    return res.status(409).json({ message: error.message });
+    next(error);
   }
 };
 
