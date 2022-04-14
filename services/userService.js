@@ -1,9 +1,12 @@
 const { User } = require('../models');
 const tokenGenerate = require('../helpers/tokenGenerate');
-const userCreateValidate = ('../validates/userCreateValidate');
+const userCreateValidate = require('../validates/userCreateValidate');
+const conflict = require('../error/conflict');
 
 const create = async ({ displayName, email, password, image }) => {
-  if (userCreateValidate(email)) return
+  const userValidate = await userCreateValidate(email);
+
+  if (userValidate) throw conflict('User already registered');
 
   await User.create({ displayName, email, password, image });
   
