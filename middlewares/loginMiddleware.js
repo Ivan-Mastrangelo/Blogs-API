@@ -6,7 +6,7 @@ const userSchema = Joi.object({
   password: Joi.string().length(6).required(),
 });
 
-const loginMiddleware = (req, res, next) => {
+const loginMiddleware = (req, _res, next) => {
   try {
     const { email, password } = req.body;
     const { error } = userSchema.validate({ email, password });
