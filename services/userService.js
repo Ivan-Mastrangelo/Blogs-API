@@ -2,6 +2,8 @@ const { User } = require('../models');
 const tokenGenerate = require('../helpers/tokenGenerate');
 const userValidate = require('../validates/userValidate');
 const conflict = require('../error/conflict');
+const userExist = require('../validates/userExist');
+const notFound = require('../error/notFound');
 
 const create = async ({ displayName, email, password, image }) => {
   const userCreateValidate = await userValidate(email);
@@ -22,7 +24,15 @@ const getAllUsers = async () => {
   return users;
 };
 
+const getUserById = async (id) => {
+  const exist = await userExist(id);
+  if (exist === false) throw notFound('User does not exist');
+  const user = await User.findByPk(id, { attributes: { exclude: 'password' } });
+  return user; 
+};
+
 module.exports = {
   create,
   getAllUsers,
+  getUserById,
 };
