@@ -1,7 +1,7 @@
 const badRequest = (message) => ({
-    message,
-    errorCode: 400,
-    stack: Error().stack,
-  });
-  
-  module.exports = badRequest;
+  message,
+  errorCode: 400,
+  stack: Error().stack,
+});
+
+module.exports = badRequest;
