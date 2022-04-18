@@ -2,8 +2,8 @@ const express = require('express');
 
 const router = express.Router();
 const categoriesController = require('../controllers/categoriesController');
-const loginMiddleware = require('../middlewares/loginMiddleware');
+const tokenVerify = require('../middlewares/tokenVerifyMiddleware');
 
-router.post('/', loginMiddleware, categoriesController.create);
+router.post('/', tokenVerify, categoriesController.create);
 
 module.exports = router;
