@@ -4,7 +4,7 @@ const tokenGenerate = (payload) => {
 const secretKey = 'só$abeQu&mviu';
 
 const jwtConfig = {
-  expiresIn: '15m',
+  expiresIn: '5d',
   algorithm: 'HS256',
 };
 
