@@ -12,9 +12,7 @@ const create = async ({ displayName, email, password, image }) => {
 
   const { id } = await User.create({ displayName, email, password, image });
   
-  const userToken = tokenGenerate({ id });
-  
-  console.log(userToken);             
+  const userToken = tokenGenerate({ id });            
   
   return userToken;
 };
