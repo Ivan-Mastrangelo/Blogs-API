@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const userRoutes = require('./routes/userRoutes');
 const loginRoutes = require('./routes/loginRoutes');
 const categoriesRoutes = require('./routes/categoriesRoutes');
+const blogPostRoutes = require('./routes/blogPostRoutes');
 const errorsMiddleware = require('./middlewares/errorsMiddleware');
 
 const app = express();
@@ -17,6 +18,7 @@ app.get('/', (request, response) => {
 app.use('/user', userRoutes);
 app.use('/login', loginRoutes);
 app.use('/categories', categoriesRoutes);
+app.use('/post', blogPostRoutes);
 
 app.use(errorsMiddleware);
 
