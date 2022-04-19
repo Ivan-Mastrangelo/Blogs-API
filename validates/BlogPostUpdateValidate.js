@@ -1,12 +1,15 @@
 const { BlogPost } = require('../models');
-const tokenDecrypt = require('../helpers/tokenDecrypt');
+// const tokenDecrypt = require('../helpers/tokenDecrypt');
 
-const BlogPostUpdateValidate = async (id, authorization) => {
-  console.log(authorization);
-  const userId = await tokenDecrypt(authorization);
+const BlogPostUpdateValidate = async (id, myId) => {
+  console.log(myId);
+  // const userId = await tokenDecrypt(myId);
   const post = await BlogPost.findByPk(id);
-  if (userId !== post.userId) return false;
-  if (userId === post.userId) return true;
+  if (myId !== post.userId) return false;
+  if (myId === post.userId) return true;
+  // post.content = 'hjdod';
+  // post.title = 'kldjfps';
+  // await post.save();
 };
 
 module.exports = BlogPostUpdateValidate;

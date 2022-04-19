@@ -33,10 +33,11 @@ const getPostById = async (req, res, next) => {
 
 const update = async (req, res, next) => {
   try {
+    console.log(req.user);
     const { id } = req.params;
-    const { authorization } = req.headers;
     const { body } = req;
-    const updatedPost = await blogPostService.update(body, id, authorization);
+    const myId = req.user;
+    const updatedPost = await blogPostService.update(body, id, myId);
     return res.status(200).json(updatedPost);
   } catch (error) {
     next(error);

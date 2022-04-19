@@ -2,7 +2,7 @@ const { BlogPost, Category, User } = require('../models');
 const badRequest = require('../error/badRequest');
 const tokenDecrypt = require('../helpers/tokenDecrypt');
 const getPostValidate = require('../validates/getPostValidade');
-const BlogPostUpdateValidate = require('../validates/BlogPostUpdateValidate');
+// const BlogPostUpdateValidate = require('../validates/BlogPostUpdateValidate');
 const unauthorized = require('../error/unauthorized');
 
 const create = async (title, content, categoryIds, authorization) => {
@@ -49,16 +49,21 @@ const getPostById = async (id) => {
   } 
 };
 
-const update = async (body, id, authorization) => {
+const update = async (body, id, myId) => {
   const { title, content, categoryIds } = body;
-  const updateValidate = await BlogPostUpdateValidate(id, authorization);
-  console.log(updateValidate);
-  if (updateValidate === false) throw unauthorized('Unauthorized user');
+  // const updateValidate = await BlogPostUpdateValidate(id, myId);
+  // console.log(updateValidate);
+  // if (updateValidate === false) 
   if (categoryIds) throw badRequest('Categories cannot be edited');
-  await BlogPost.update({ title, content }, { where: { id } });
   const updatedPost = await BlogPost.findByPk(id, {
     include: [{ model: Category, as: 'categories', through: { attributes: [] } }],
   });
+  if (myId !== updatedPost.userId) throw unauthorized('Unauthorized user');
+  
+  updatedPost.content = content;
+  updatedPost.title = title;
+  await updatedPost.save();
+ 
   return updatedPost;
 };
 

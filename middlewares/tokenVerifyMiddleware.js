@@ -8,7 +8,8 @@ const tokenVerify = (req, res, next) => {
       return res.status(401).json({ message: 'Token not found' });
     }
     const secretKey = 'só$abeQu&mviu';
-    jwt.verify(token, secretKey);
+    const payload = jwt.verify(token, secretKey);
+    req.user = payload.id;
     next();
   } catch (error) {
     return res.status(401).json({ message: 'Expired or invalid token' });

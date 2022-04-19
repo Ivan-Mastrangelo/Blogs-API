@@ -6,13 +6,13 @@ const userExist = require('../validates/userExist');
 const notFound = require('../error/notFound');
 
 const create = async ({ displayName, email, password, image }) => {
-  const userCreateValidate = await userValidate(email);
+  const userCreateValidate = await userValidate(email, password);
 
   if (userCreateValidate) throw conflict('User already registered');
 
-  await User.create({ displayName, email, password, image });
+  const { id } = await User.create({ displayName, email, password, image });
   
-  const userToken = tokenGenerate({ displayName, email });
+  const userToken = tokenGenerate({ id });
   
   console.log(userToken);             
   
