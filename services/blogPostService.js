@@ -1,5 +1,4 @@
-const { BlogPost } = require('../models');
-const { Category } = require('../models');
+const { BlogPost, Category, User } = require('../models');
 const badRequest = require('../error/badRequest');
 const tokenDecrypt = require('../helpers/tokenDecrypt');
 
@@ -16,6 +15,21 @@ const create = async (title, content, categoryIds, authorization) => {
   return newBlogPost;
 };
 
+const getAllPosts = async () => {
+  const allPosts = await BlogPost.findAll({
+    include: [
+      {
+        model: User,
+        as: 'user',
+        attributes: { exclude: ['password'] },
+      },
+      { model: Category, as: 'categories' },
+    ],
+  });
+  return allPosts;
+};
+
 module.exports = {
   create,
+  getAllPosts,
 };
