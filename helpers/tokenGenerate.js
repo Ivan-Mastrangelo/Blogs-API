@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 const tokenGenerate = (payload) => {
-const secretKey = 'só$abeQu&mviu';
+const secretKey = process.env.JWT_SECRET;
 
 const jwtConfig = {
   expiresIn: '5d',
