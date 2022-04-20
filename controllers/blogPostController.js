@@ -31,6 +31,17 @@ const getPostById = async (req, res, next) => {
   }
 };
 
+const getPostBySearch = async (req, res, next) => {
+  try {
+    const searchTerm = req.query.q;
+    console.log(searchTerm);
+    const posts = await blogPostService.getPostBySearch(searchTerm);
+    return res.status(200).json(posts);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const update = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -60,4 +71,5 @@ module.exports = {
   getPostById,
   update,
   destroy,
+  getPostBySearch,
 };
