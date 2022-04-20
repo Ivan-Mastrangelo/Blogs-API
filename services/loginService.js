@@ -3,11 +3,11 @@ const badRequest = require('../error/badRequest');
 const userValidate = require('../validates/userValidate');
 
 const login = async ({ email, password }) => {
-  const loginValidate = await userValidate(email, password);
+  const isUser = await userValidate(email, password);
 
-  if (loginValidate === false) throw badRequest('Invalid fields');
+  if (isUser === false) throw badRequest('Invalid fields');
   
-  const userToken = tokenGenerate({ id: loginValidate.id });
+  const userToken = tokenGenerate({ id: isUser.id });
   
   return userToken;
 };
