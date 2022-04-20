@@ -33,12 +33,22 @@ const getPostById = async (req, res, next) => {
 
 const update = async (req, res, next) => {
   try {
-    console.log(req.user);
     const { id } = req.params;
     const { body } = req;
-    const myId = req.user;
-    const updatedPost = await blogPostService.update(body, id, myId);
+    const clientId = req.user;
+    const updatedPost = await blogPostService.update(body, id, clientId);
     return res.status(200).json(updatedPost);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const destroy = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const clientId = req.user;
+    await blogPostService.destroy(id, clientId);
+    return res.status(204).end();
   } catch (error) {
     next(error);
   }
@@ -49,4 +59,5 @@ module.exports = {
   getAllPosts,
   getPostById,
   update,
+  destroy,
 };
