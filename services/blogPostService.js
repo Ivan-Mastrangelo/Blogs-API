@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { BlogPost, Category, User } = require('../models');
 const badRequest = require('../error/badRequest');
 const tokenDecrypt = require('../helpers/tokenDecrypt');
@@ -49,6 +50,26 @@ const getPostById = async (id) => {
   } 
 };
 
+const getPostBySearch = async (searchTerm) => {
+  const posts = await BlogPost.findAll({ 
+    where: {
+      [Op.or]: [
+        { title: { [Op.substring]: searchTerm } },
+        { content: { [Op.substring]: searchTerm } },
+      ],
+    },
+    include: [
+      {
+        model: User,
+        as: 'user',
+        attributes: { exclude: ['password'] },
+      },
+      { model: Category, as: 'categories', through: { attributes: [] } },
+    ],
+  });
+  return posts;
+};
+
 const update = async (body, id, clientId) => {
   const { title, content, categoryIds } = body;
   if (categoryIds) throw badRequest('Categories cannot be edited');
@@ -75,6 +96,7 @@ module.exports = {
   create,
   getAllPosts,
   getPostById,
+  getPostBySearch,
   update,
   destroy,
 };
