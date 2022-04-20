@@ -8,6 +8,7 @@ const updatePostMiddleware = require('../middlewares/updatePostMiddleware');
 
 router.post('/', tokenVerify, blogPostMiddleware, blogPostController.create);
 router.get('/', tokenVerify, blogPostController.getAllPosts);
+router.get('/search', tokenVerify, blogPostController.getPostBySearch);
 router.get('/:id', tokenVerify, blogPostController.getPostById);
 router.put('/:id', tokenVerify, updatePostMiddleware, blogPostController.update);
 router.delete('/:id', tokenVerify, blogPostController.destroy);
