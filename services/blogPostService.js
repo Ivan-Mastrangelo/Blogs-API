@@ -1,20 +1,17 @@
 const { Op } = require('sequelize');
 const { BlogPost, Category, User } = require('../models');
 const badRequest = require('../error/badRequest');
-const tokenDecrypt = require('../helpers/tokenDecrypt');
 const getPostValidate = require('../validates/getPostValidade');
 const unauthorized = require('../error/unauthorized');
 const notFound = require('../error/notFound');
 
-const create = async (title, content, categoryIds, authorization) => {
+const create = async (title, content, categoryIds, userId) => {
   await Promise.all(categoryIds.map(async (ids) => {
-    const exist = await Category.findByPk(ids);
-    if (!exist) throw badRequest('"categoryIds" not found');
+    const isCategory = await Category.findByPk(ids);
+    if (!isCategory) throw badRequest('"categoryIds" not found');
   }));
 
-  const userId = await tokenDecrypt(authorization);
-  const newBlogPost = await BlogPost
-    .create({ userId, title, content });
+  const newBlogPost = await BlogPost.create({ userId, title, content });
   
   return newBlogPost;
 };
@@ -96,7 +93,7 @@ module.exports = {
   create,
   getAllPosts,
   getPostById,
-  getPostBySearch,
   update,
   destroy,
+  getPostBySearch,
 };
