@@ -3,8 +3,8 @@ const blogPostService = require('../services/blogPostService');
 const create = async (req, res, next) => {
   try {
     const { title, content, categoryIds } = req.body;
-    const { authorization } = req.headers;
-    const blogPost = await blogPostService.create(title, content, categoryIds, authorization);
+    const userId = req.user;
+    const blogPost = await blogPostService.create(title, content, categoryIds, userId);
   
     return res.status(201).json(blogPost);
   } catch (error) {
@@ -34,7 +34,6 @@ const getPostById = async (req, res, next) => {
 const getPostBySearch = async (req, res, next) => {
   try {
     const searchTerm = req.query.q;
-    console.log(searchTerm);
     const posts = await blogPostService.getPostBySearch(searchTerm);
     return res.status(200).json(posts);
   } catch (error) {
