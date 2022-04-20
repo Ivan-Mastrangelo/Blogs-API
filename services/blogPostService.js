@@ -3,6 +3,7 @@ const badRequest = require('../error/badRequest');
 const tokenDecrypt = require('../helpers/tokenDecrypt');
 const getPostValidate = require('../validates/getPostValidade');
 const unauthorized = require('../error/unauthorized');
+const notFound = require('../error/notFound');
 
 const create = async (title, content, categoryIds, authorization) => {
   await Promise.all(categoryIds.map(async (ids) => {
@@ -48,13 +49,13 @@ const getPostById = async (id) => {
   } 
 };
 
-const update = async (body, id, myId) => {
+const update = async (body, id, clientId) => {
   const { title, content, categoryIds } = body;
   if (categoryIds) throw badRequest('Categories cannot be edited');
   const updatedPost = await BlogPost.findByPk(id, {
     include: [{ model: Category, as: 'categories', through: { attributes: [] } }],
   });
-  if (myId !== updatedPost.userId) throw unauthorized('Unauthorized user');
+  if (clientId !== updatedPost.userId) throw unauthorized('Unauthorized user');
   
   updatedPost.content = content;
   updatedPost.title = title;
@@ -63,9 +64,17 @@ const update = async (body, id, myId) => {
   return updatedPost;
 };
 
+const destroy = async (id, clientId) => {
+  const deletePost = await BlogPost.findByPk(id);
+  if (!deletePost) throw notFound('Post does not exist');
+  if (clientId !== deletePost.userId) throw unauthorized('Unauthorized user');
+  await BlogPost.destroy({ where: { id } });
+};
+
 module.exports = {
   create,
   getAllPosts,
   getPostById,
   update,
+  destroy,
 };
