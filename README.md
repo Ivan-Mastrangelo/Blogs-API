@@ -15,7 +15,7 @@ Nele foi solicitada a construção de uma API conectada a um banco de dados com 
 
 Basta clonar o projeto:
 ```
-git@github.com:Ivan-Mastrangelo/Blogs-API
+git@github.com:Ivan-Mastrangelo/Blogs-API.git
 ```
 Entrar no diretório criado:
 ```
