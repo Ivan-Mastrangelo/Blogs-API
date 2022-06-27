@@ -27,10 +27,10 @@ Instalar as dependências do projeto:
   ```
 Será necessária a criação de um arquivo .env na raiz do projeto para a conexão com seu banco de dados e a chave JWT, no seguinte formato:
 ```
-MYSQL_USER='login do banco de dados'
-MYSQL_PASSWORD='senha'
+MYSQL_USER=seu login do banco de dados
+MYSQL_PASSWORD=senha
 HOSTNAME=localhost
-JWT_SECRET='chave'
+JWT_SECRET=secret
 ```
 E iniciar o servidor:
 ```
