@@ -36,15 +36,15 @@ E iniciar o servidor:
 ```
   npm run start
   ```
-Criar o banco de dados:
+Para criar o banco de dados, rode o comando:
 ```
 npm run prestart
 ```
-Povoar o banco com alguns dados iniciais(opcional):
+Para povoar o banco com alguns dados iniciais(opcional), rode o comando:
 ```
 npm run seed
 ```
-Abrir algum emulador de requisições como o Postman ou o Insomnia e realizar as requisições nos seguintes formatos:
+Agora basta abrir algum emulador de requisições como o Postman ou o Insomnia e realizar as requisições nos seguintes formatos:
 
 Para criação de usuário, uma rota POST:
 ```
@@ -58,6 +58,7 @@ Com o corpo no seguinte formato json:
   "password": "123456",
   "image": "null"
 }
+```
 
 Para realização de login, uma rota POST:
 ```
