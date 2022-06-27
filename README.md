@@ -125,3 +125,4 @@ Para recuperar posts por parte de seu título ou conteúdo, rota GET, e inserir 
 http://localhost:3000/post/search?q=
 ```
 ---
+---
