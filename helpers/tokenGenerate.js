@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 const tokenGenerate = (payload) => {
-const secretKey = 'só$abeQu&mviu';
+const secretKey = process.env.JWT_SECRET;
 
 const jwtConfig = {
   expiresIn: '5d',
